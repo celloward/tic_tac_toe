@@ -1,0 +1,29 @@
+Problems:
+    - Representation of the board
+        * Multi-dimesional array (push symbols onto appropriate squares)
+        * Hash with each position of square as key and the square as the value
+    - Specifying terms of victory
+        * Three of the same symbol are in adjacent "quadrants" (define adjacent? or )
+    - Specifying end of game as draw
+        * All numbers are letters and no terms of victory are met.
+    - Filled spaces must be immutable
+        * If number is in quadrant, switch it; if letter is in quadrant, return "Try again"
+    - Intuitive gameplay
+        * Numbers in each nonant, replaced by symbol
+        * "X:" prompt, numerical input
+
+Questions
+    - Does victory and draw all go into game_over? or are they separate methods?
+    - How to insert multiline string into array? (join with boxes as the argument? Does #join have multiline string capabilities?)
+    - How to print a multidimensional array maintaining rows and columns?
+
+Board
+         |     |   
+      1  |  2  |  3  
+   ______|_____|______
+         |     |     
+      4  |  5  |  6  
+   ______|_____|______
+         |     |     
+      7  |  8  |  9  
+         |     |       

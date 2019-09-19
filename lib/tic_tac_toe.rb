@@ -14,18 +14,29 @@ class TicTacToe
     end
   end
 
-private
-  def three_in_a_row?
-    for a in (0..3)
-      x = 0
-      o = 0
-      for b in (0..3)
-        if yield 
+# private
+  def three_in_a_row? match
+    for row in (0..2)
+      count = 0 #can't reset for vertical or diagonal
+      for item in (0..2)
+        count += 1 if self[row][item] == match || self[item][row] == match || self[row][row] == match || self[row][2-item] == match
+      end
+      return true if count == 3
+    end
+    false
+  end
 
   def game_over?
-    three_in_a_row?({ |a, b| ttt_board[b][a] })
+    if ttt_board.three_in_a_row?(:X) == true
+      puts "X wins!"
+    elsif ttt_board.three_in_a_row?(:O) == true
+      puts "O wins!"
+    elsif ttt_board.all?(Symbol)
+      puts "Draw!"
+    else
+      return false
+    end
+    true
   end
 
 end
-
-# The Gameplay Interface
