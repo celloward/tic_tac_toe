@@ -1,37 +1,73 @@
 class TicTacToe
-  attr_accessor :ttt_board
-    
+  attr_accessor :ttt_board, :x_turn
+  attr_accessor :player
+
   def initialize
     @ttt_board = [[1, 2, 3],
                   [4, 5, 6],
                   [7, 8, 9]]
-    @game_over = false
+    @x_turn = 1
+    @player = ["O", "X"]
+    turn
   end
 
   def board
-    ttt_board.each do |array|
-      puts array.map { |element| "__#{element}__" }.join("|")
+    "     |     |     \n  #{ttt_board[0][0]}  |  #{ttt_board[0][1]}  |  #{ttt_board[0][2]}  \n-----|-----|-----\n     |     |     \n  #{ttt_board[1][0]}  |  #{ttt_board[1][1]}  |  #{ttt_board[1][2]}  \n-----|-----|-----\n     |     |     \n  #{ttt_board[2][0]}  |  #{ttt_board[2][1]}  |  #{ttt_board[2][2]}  \n"
+  end
+
+  def turn
+    while self.game_over? == false
+      puts self.board
+      puts "#{player[x_turn]}: "
+      change(gets.chomp)
     end
   end
 
-# private
+  def change number
+      if (1..9).include?(number.to_i) && ttt_board.flatten.include?(number.to_i)
+        if x_turn == 1
+          ttt_board.flatten[ttt_board.flatten.index(number.to_i)] = :X
+          self.x_turn = 0
+        else
+          ttt_board.flatten[ttt_board.flatten.index(number.to_i)] = :O
+          self.x_turn = 1
+        end
+      else
+        puts "Not a valid entry. Please try again."
+        change(gets.chomp)
+      end
+  end
+
   def three_in_a_row? match
     for row in (0..2)
-      count = 0 #can't reset for vertical or diagonal
-      for item in (0..2)
-        count += 1 if self[row][item] == match || self[item][row] == match || self[row][row] == match || self[row][2-item] == match
-      end
+      count = 0
+        for item in (0..2)
+          if block_given?
+            count += 1 if yield(row, item) == match
+          end
+        end
       return true if count == 3
     end
     false
   end
 
+  def pan_directional match
+    if three_in_a_row?(match) { |row, item| ttt_board[row][item] } == true || 
+    three_in_a_row?(match) { |row, item| ttt_board[item][row] } == true ||
+    three_in_a_row?(match) { |row, item| ttt_board[item][item] } == true ||
+    three_in_a_row?(match) { |row, item| ttt_board[item][2 - item] } == true
+      return true
+    else
+      false
+    end
+  end
+
   def game_over?
-    if ttt_board.three_in_a_row?(:X) == true
+    if pan_directional(:X)
       puts "X wins!"
-    elsif ttt_board.three_in_a_row?(:O) == true
+    elsif pan_directional(:O)
       puts "O wins!"
-    elsif ttt_board.all?(Symbol)
+    elsif ttt_board.flatten.all?(Symbol)
       puts "Draw!"
     else
       return false
@@ -40,3 +76,5 @@ class TicTacToe
   end
 
 end
+
+TicTacToe.new
