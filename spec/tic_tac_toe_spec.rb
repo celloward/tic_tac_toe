@@ -12,18 +12,19 @@ describe TicTacToe do
 
     it "changes the board when player enters valid play" do
         game = TicTacToe.new
-        expect()
+        game.change(3)
+        expect(game.ttt_board).to eql([[1, 2, :X], [4, 5, 6], [7, 8, 9]])
     end
 
     it "displays graphical board" do
         game = TicTacToe.new
-        expect(game.board).to eql("     |     |     \n  1  |  2  |  3  \n-----|-----|-----\n     |     |     \n  4  |  5  |  6  \n-----|-----|-----\n     |     |     \n  7  |  8  |  9  \n")
+        expect(game.board).to eql("     |     |     \n  1  |  2  |  3  \n-----|-----|-----\n     |     |     \n  4  |  5  |  6  \n-----|-----|-----\n     |     |     \n  7  |  8  |  9  \n     |     |     \n")
     end
 
     it "displays changes on graphical board" do
         game = TicTacToe.new
         game.ttt_board = [[:O, :X, :O], [:X, :X, 6], [:X, :O, :X]]
-        expect(game.board).to eql("     |     |     \n  O  |  X  |  O  \n-----|-----|-----\n     |     |     \n  X  |  X  |  6  \n-----|-----|-----\n     |     |     \n  X  |  O  |  X  \n")
+        expect(game.board).to eql("     |     |     \n  O  |  X  |  O  \n-----|-----|-----\n     |     |     \n  X  |  X  |  6  \n-----|-----|-----\n     |     |     \n  X  |  O  |  X  \n     |     |     \n")
     end
 
     it "ends when all of one symbol occupy three horizontal spaces in a row" do
