@@ -7,7 +7,7 @@ describe TicTacToe do
 
     it "only accepts legal numerical input" do
         game = TicTacToe.new
-        expect().to eql()
+        game.change("abc").should_receive(:Not a valid entry. Please try again.)
     end
 
     it "changes the board when player enters valid play" do
