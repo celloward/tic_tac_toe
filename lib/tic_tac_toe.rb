@@ -1,3 +1,5 @@
+require "matrix"
+
 class TicTacToe
   attr_accessor :ttt_board, :x_turn
   attr_reader :player, :board
@@ -31,18 +33,27 @@ class TicTacToe
   end
 
   def change number
-      # if (1..9).include?(number.to_i) && ttt_board.flatten.include?(number.to_i)
-        # if x_turn == 1
-          self.ttt_board.flatten[self.ttt_board.flatten.index(number.to_i)] = :X
-          # self.x_turn = 0
-        # else
-          # self.ttt_board.flatten[ttt_board.flatten.index(number.to_i)] = :O
-          # self.x_turn = 1
-        # end
-      # else
-        # puts "Not a valid entry. Please try again."
-        # change(gets.chomp)
-      # end
+      if (1..9).include?(number.to_i) && ttt_board.flatten.include?(number.to_i)
+        if x_turn == 1
+          index = Matrix[*ttt_board].index(number)
+          # i_row = 0
+          # i_element = 0
+          # ttt_board.each_with_index do |row, index| 
+          #   if row.include?(number)
+          #     i_row = index 
+          #     i_element = row.index(number)
+          #   end
+          # end
+          self.ttt_board[index[0]][index[1]] = :X
+          self.x_turn = 0
+        else
+          self.ttt_board.flatten[ttt_board.flatten.index(number.to_i)] = :O
+          self.x_turn = 1
+        end
+      else
+        puts "Not a valid entry. Please try again."
+        change(gets.chomp)
+      end
   end
 
   def three_in_a_row? match
