@@ -21,7 +21,7 @@ class TicTacToe
     BOARD
     @x_turn = 1
     @player = ["O", "X"]
-    turn
+    # turn
   end
 
   def turn
@@ -56,24 +56,24 @@ class TicTacToe
       end
   end
 
-  def three_in_a_row? match
-    for row in (0..2)
-      count = 0
-        for item in (0..2)
+  def in_a_row? match, number
+    for row in (0..self.count - 1)
+      counter = 0
+        for item in (0..row.count - 1)
           if block_given?
-            count += 1 if yield(row, item) == match
+            yield(row, item) == match ? counter += 1 : counter = 0
+            return true if counter >= number
           end
         end
-      return true if count == 3
     end
     false
   end
 
   def pan_directional match
-    if three_in_a_row?(match) { |row, item| ttt_board[row][item] } == true || 
-    three_in_a_row?(match) { |row, item| ttt_board[item][row] } == true ||
-    three_in_a_row?(match) { |row, item| ttt_board[item][item] } == true ||
-    three_in_a_row?(match) { |row, item| ttt_board[item][2 - item] } == true
+    if ttt_board.in_a_row?(match, 3) { |row, item| ttt_board[row][item] } == true || 
+    ttt_board.in_a_row?(match, 3) { |row, item| ttt_board[item][row] } == true ||
+    ttt_board.in_a_row?(match, 3) { |row, item| ttt_board[item][item] } == true ||
+    ttt_board.in_a_row?(match, 3) { |row, item| ttt_board[item][2 - item] } == true
       return true
     else
       false
