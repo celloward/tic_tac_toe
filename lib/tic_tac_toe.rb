@@ -1,4 +1,20 @@
 require "matrix"
+class Array
+
+  def in_a_row? match, number
+    for row in (0..self.count - 1)
+      counter = 0
+        for item in (0..self[row].count - 1)
+          if block_given?
+            yield(row, item) == match ? counter += 1 : counter = 0
+            return true if counter >= number
+          end
+        end
+    end
+    false
+  end
+
+end
 
 class TicTacToe
   attr_accessor :ttt_board, :x_turn
@@ -54,19 +70,6 @@ class TicTacToe
         puts "Not a valid entry. Please try again."
         change(gets.chomp)
       end
-  end
-
-  def in_a_row? match, number
-    for row in (0..self.count - 1)
-      counter = 0
-        for item in (0..row.count - 1)
-          if block_given?
-            yield(row, item) == match ? counter += 1 : counter = 0
-            return true if counter >= number
-          end
-        end
-    end
-    false
   end
 
   def pan_directional match
