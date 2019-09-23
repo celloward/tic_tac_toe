@@ -21,33 +21,33 @@ class TicTacToe
     BOARD
     @x_turn = 1
     @player = ["O", "X"]
-    # turn
+    turn
   end
 
   def turn
     while self.game_over? == false
       puts board
-      puts "#{player[x_turn]}: "
-      change(gets.chomp)
+      print "#{player[x_turn]}: "
+      change(gets.chomp.to_i)
     end
   end
 
   def change number
       if (1..9).include?(number.to_i) && ttt_board.flatten.include?(number.to_i)
+        index = Matrix[*ttt_board].index(number)
+        # i_row = 0
+        # i_element = 0
+        # ttt_board.each_with_index do |row, index| 
+        #   if row.include?(number)
+        #     i_row = index 
+        #     i_element = row.index(number)
+        #   end
+        # end
         if x_turn == 1
-          index = Matrix[*ttt_board].index(number)
-          # i_row = 0
-          # i_element = 0
-          # ttt_board.each_with_index do |row, index| 
-          #   if row.include?(number)
-          #     i_row = index 
-          #     i_element = row.index(number)
-          #   end
-          # end
           self.ttt_board[index[0]][index[1]] = :X
           self.x_turn = 0
         else
-          self.ttt_board.flatten[ttt_board.flatten.index(number.to_i)] = :O
+          self.ttt_board[index[0]][index[1]] = :O
           self.x_turn = 1
         end
       else
