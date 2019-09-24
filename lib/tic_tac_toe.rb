@@ -53,18 +53,18 @@ class TicTacToe
       end
   end
 
-  def seqential? board, match, outer_step, inner_step
-    board.step(outer_step).each do |index|
-      return true if index.select { |i| board[i-1] }.all?(match) 
+  def sequential? matrix, match, outer_step, inner_step
+    (0..8).step(outer_step).each do |index|
+      matrix.select { matrix[index] }.all?(match) 
       index += inner_step
     end
   end
 
   def tic_tac_toe match
-    sequential?(ttt_board, match, 3, 1) { |row, item| ttt_board[row][item] } ||
-      sequential?(ttt_board, match, 1, 3) { |row, item| ttt_board[item][row] } ||
-      sequential?(ttt_board, match, 4, 0) { |row, item| ttt_board[item][item] } ||
-      match == board[2] == board[4] == board[6]
+    sequential?(ttt_board, match, 3, 1) ||
+      sequential?(ttt_board, match, 1, 3) ||
+      sequential?(ttt_board, match, 4, 0) #||
+      # match == ttt_board[2] == ttt_board[4] == ttt_board[6]
   end
 
   def game_over?
