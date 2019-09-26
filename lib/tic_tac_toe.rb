@@ -1,6 +1,6 @@
 class TicTacToe
-  attr_accessor :ttt_board, :x_turn, :player
-  # attr_reader :player
+# attr_accessor :x_turn, :player, :ttt_board
+
   def initialize
     @ttt_board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     @x_turn = true
@@ -13,6 +13,10 @@ class TicTacToe
     puts board
     turn
   end
+  
+  private 
+
+  attr_accessor :ttt_board, :player, :x_turn
 
   def board
     @board =<<~BOARD
@@ -32,7 +36,7 @@ class TicTacToe
   end
 
   def turn
-    while !self.game_over?
+    while !game_over?
       x_turn == true ? self.player = :X : self.player = :O
       print "#{player}: "
       change(gets.chomp.to_i)
@@ -46,7 +50,7 @@ class TicTacToe
   def change number
       if (1..9).include?(number) && ttt_board.include?(number)
         index = ttt_board.index(number)
-          self.ttt_board[index] = player
+          ttt_board[index] = player
       else
         puts "Not a valid entry. Please try again."
         change(gets.chomp.to_i)

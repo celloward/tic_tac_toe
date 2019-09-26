@@ -2,7 +2,7 @@ require "./lib/tic_tac_toe"
 
 describe TicTacToe do
     it "doesn't allow multiple plays on same space"
-
+    
 #    it "only accepts legal numerical input" do
 #        game = TicTacToe.new
 #        game.change("abc").should_receive(:Not a valid entry. Please try again.)
@@ -48,7 +48,7 @@ describe TicTacToe do
         expect(subject.game_over?).to eql(nil)
     end
 
-    describe "Array#three_in_a_row?" do
+    describe "Array#three_sequential?" do
 
       it "does various righteous things"
 
