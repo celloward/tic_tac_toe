@@ -1,5 +1,4 @@
 class TicTacToe
-# attr_accessor :x_turn, :player, :ttt_board
 
   def initialize
     @ttt_board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -36,7 +35,7 @@ class TicTacToe
   end
 
   def turn
-    while !game_over?
+    while !game_over
       x_turn == true ? self.player = :X : self.player = :O
       print "#{player}: "
       change(gets.chomp.to_i)
@@ -44,39 +43,44 @@ class TicTacToe
       puts board
       self.x_turn = !x_turn
     end
-    puts game_over?
+    declare_outcome
   end
 
   def change number
       if (1..9).include?(number) && ttt_board.include?(number)
-        index = ttt_board.index(number)
-          ttt_board[index] = player
+        ttt_board[number-1] = player
       else
         puts "Not a valid entry. Please try again."
         change(gets.chomp.to_i)
       end
   end
 
-  def three_sequential? matrix, match, outer_step, inner_step
-    [0, outer_step, outer_step * 2].each do |index|
-      return true if [index, index + inner_step, index + inner_step * 2].map { |i| matrix[i] }.all?(match)
-    end
-    false
-  end
- 
-  def tic_tac_toe match
-    three_sequential?(ttt_board, match, 3, 1) ||
-      three_sequential?(ttt_board, match, 1, 3) ||
-       [ttt_board[0], ttt_board[4], ttt_board[8]].all?(match) ||
-      [ttt_board[2], ttt_board[4], ttt_board[6]].all?(match)
+  def all_equal? board, a, b, c
+    board[a] == board[b] && board[b] == board[c]
   end
 
-  def game_over?
-    if tic_tac_toe(player)
-      "#{player} wins!"
-    elsif ttt_board.all?(Symbol)
-      "Draw!"
+  def select_winner_row_or_column
+    [0, 1, 2].each do |i|
+      row = i * 3
+      if all_equal?(ttt_board, i, i + 3, i + 6)
+        return ttt_board[i]
+      elsif all_equal?(ttt_board, row, row + 1, row + 2)
+        return ttt_board[row]
+      end
     end
+    nil
+  end
+
+  def select_winner_diagonal
+    return ttt_board[4] if all_equal?(ttt_board, 0, 4, 8) || all_equal?(ttt_board, 2, 4, 6)
+  end
+ 
+  def game_over
+    select_winner_row_or_column || select_winner_diagonal || ttt_board.all?(Symbol)
+  end
+
+  def declare_outcome
+    game_over == true ? (puts "Draw!") : (puts "#{game_over} wins!")
   end
 
 end

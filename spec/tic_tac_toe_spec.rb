@@ -24,28 +24,28 @@ describe TicTacToe do
 
     it "ends when all of one symbol occupy three horizontal spaces in a row" do
         subject.ttt_board = [:X, :X, :X, 4, 5, 6, 7, 8, 9]
-        expect(subject.game_over?).to eql("X wins!")
+        expect(subject.game_over(ttt_board)).to eql("X wins!")
     end
 
     it "ends when all of one symbol occupy three vertical spaces in a row" do
         subject.ttt_board = [1, 2, :O, 4, 5, :O, 7, 8, :O]
         subject.player = :O
-        expect(subject.game_over?).to eql("O wins!")
+        expect(subject.game_over(ttt_board)).to eql("O wins!")
     end
 
     it "ends when all of one symbol occupy three diagonal spaces in a row" do
         subject.ttt_board = [1, 2, :X, 4, :X, 5, :X, 8, 9]
-        expect(subject.game_over?).to eql("X wins!")
+        expect(subject.game_over(ttt_board)).to eql("X wins!")
     end
 
     it "ends when all spaces are filled and there are no three in a row" do
         subject.ttt_board = [:O, :X, :O, :X, :X, :O, :X, :O, :X]
-        expect(subject.tic_tac_toe(:O)).to eql(false)
+        expect(subject.game_over(ttt_board)).to eql(false)
     end
 
     it "doesn't end until winner or draw" do
         subject.ttt_board = [:O, :X, :O, :X, :X, 6, :X, :O, :X]
-        expect(subject.game_over?).to eql(nil)
+        expect(subject.game_over(ttt_board)).to eql(nil)
     end
 
     describe "Array#three_sequential?" do
